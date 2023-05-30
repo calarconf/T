@@ -1,7 +1,7 @@
 import math
 
 def suma_cuadrados_minima(n):
-    # Crear una lista para almacenar las soluciones parciales
+    # Se crea una lista para almacenar las soluciones parciales
     soluciones = [float('inf')] * (n + 1)
     
     # El caso base: el número 0 no requiere sumar ningún cuadrado

@@ -1,6 +1,6 @@
 import time
 
-def is_prime_traditional(n):
+def esprimo_tradicional(n):
     if n <= 1:
         return False
 
@@ -10,7 +10,7 @@ def is_prime_traditional(n):
 
     return True
 
-def is_prime_euler(n):
+def esprimo_euler(n):
     if n <= 1:
         return False
 
@@ -29,20 +29,20 @@ def is_prime_euler(n):
     return totient(n)
 
 # Número a comprobar
-number = 9973
+number = 22456
 
 # Comprobación del tiempo utilizando el método tradicional
 start_time = time.time()
-is_prime = is_prime_traditional(number)
+es_primo = esprimo_tradicional(number)
 end_time = time.time()
 
-print(f"El número {number} ¿es primo? {is_prime}")
+print(f"El número {number} ¿es primo? {es_primo}")
 print(f"Tiempo utilizando el método tradicional: {end_time - start_time} segundos")
 
 # Comprobación del tiempo utilizando Totient de Euler
 start_time = time.time()
-is_prime = is_prime_euler(number)
+es_primo = esprimo_euler(number)
 end_time = time.time()
 
-print(f"El número {number} ¿es primo? {is_prime}")
+print(f"El número {number} ¿es primo? {es_primo}")
 print(f"Tiempo utilizando Totient de Euler: {end_time - start_time} segundos")

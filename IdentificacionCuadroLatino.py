@@ -123,23 +123,19 @@ def verificarNeutro(neutro, mat):
 
 ## se verifica con todas las triplas posibles (a*b)*c = a*(b*c), es O(n3)
 ## cada elemento se convierte en un indice del conjunto para operar más rapidamente
-def verificarAsociatividad(mat): 
-    conjunto = []
-    dic = {}
+def verificarAsociatividad(matriz):
+    n = len(matriz)  # Tamaño de la matriz
 
-    for i in range(1,len(mat[0])):
-        conjunto.append(mat[0][i])
-        dic.setdefault(mat[0][i], i)
-    for i in range(1,len(mat)):
-        for j in range(1, len(mat[i])):
-            mat[i][j]=dic[mat[i][j]]
-
-    for i in range(1, len(conjunto)+1):
-        for j in range(1, len(conjunto)+1):
-            for k in range(1, len(conjunto)+1):
-                if(mat[mat[i][j]][k]!=mat[i][mat[j][k]]):
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                resultado1 = matriz[i][j] + (matriz[j][k] + matriz[i][k])
+                resultado2 = (matriz[i][j] + matriz[i][k]) + matriz[j][k]
+                if resultado1 != resultado2:
                     return False
-    return True         
+    
+    return True
+
      
 ##################################################################################
 ###################################################################################
