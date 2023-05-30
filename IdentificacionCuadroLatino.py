@@ -1,18 +1,15 @@
 
-def crearConjunto(mat): ## se crea el conjunto de todos los elementos de la tabla a partir de la primera fila
+def crearConjunto(mat): 
     set={}
     for i in range (1,len(mat[0])):
         set.setdefault(mat[0][i], False)
     return set
 
-## se verifica por cada fila sí el elemento ya apareció una vez, 
-## sí algun elemento no aparece ninguna vez es porque otro elemento se está repitiendo o
-## algún elemento que no pertenece al conjunto está en la tabla  
+
 def verificarFilas(mat,set): 
     try:
         for i in range(1, len(mat)):
             for j in range(1, len(mat[i])):
-                ##print(mat[i][j]," ",set[mat[i][j]])
                 if(set[mat[i][j]]== True):
                     return False
                 set[mat[i][j]]= True
@@ -22,14 +19,11 @@ def verificarFilas(mat,set):
     except:
         return False
 
-## se verifica por cada columna sí el elemento ya apareció una vez, 
-## sí algun elemento no aparece ninguna vez es porque otro elemento se está repitiendo o
-## algún elemento que no pertenece al conjunto está en la tabla
+
 def verificarColumnas(mat, set):
     try:
         for j in range(1, len(mat)):
             for i in range(1, len(mat[j])):
-                ##print(mat[i][j]," ",set[mat[i][j]])
                 if(set[mat[i][j]]== True):
                     return False
                 set[mat[i][j]]= True
@@ -39,7 +33,7 @@ def verificarColumnas(mat, set):
     except:
         return False
 
-def verificarLatino(mat, set):## se verifican filas y columnas
+def verificarLatino(mat, set):
     cumpleFila = verificarFilas(mat, set)
     cumpleColumna = verificarColumnas(mat, set)
     return cumpleFila and cumpleColumna
@@ -69,9 +63,6 @@ def ordenarMatriz(mat):
             switchear(i, index, mat)
     return mat
 
-## se busca el elemento neutro, dado que la matriz se ordenó 
-## poniendo los elemntos del conjunto en el mismo orden en fila y columna, 
-## solo hace falta revisar la diagonal principal
 def buscarNeutro(mat): 
     for i in range(1, len(mat)):
         if(mat[0][i]==mat[i][i] and mat[i][0]==mat[i][i]):
@@ -85,37 +76,41 @@ def verificarNeutro(neutro, mat):
             return False
     return True
 
-## se verifica con todas las triplas posibles (a*b)*c = a*(b*c), es O(n3)
-## cada elemento se convierte en un indice del conjunto para operar más rapidamente
-def verificarAsociatividad(matriz):
-    n = len(matriz)  # Tamaño de la matriz
+def verificarAsociatividad(mat): 
+    conjunto = []
+    dic = {}
 
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                resultado1 = matriz[i][j] + (matriz[j][k] + matriz[i][k])
-                resultado2 = (matriz[i][j] + matriz[i][k]) + matriz[j][k]
-                if resultado1 != resultado2:
+    for i in range(1,len(mat[0])):
+        conjunto.append(mat[0][i])
+        dic.setdefault(mat[0][i], i)
+    for i in range(1,len(mat)):
+        for j in range(1, len(mat[i])):
+            mat[i][j]=dic[mat[i][j]]
+
+    for i in range(1, len(conjunto)+1):
+        for j in range(1, len(conjunto)+1):
+            for k in range(1, len(conjunto)+1):
+                if(mat[mat[i][j]][k]!=mat[i][mat[j][k]]):
                     return False
-    
-    return True
-
+    return True         
      
-##################################################################################
-###################################################################################
-## Programa 
-###################################################################################
+matriz = [[  0,'a','f1','f2','f3','f4','f5'], 
+          ['a','a','f1','f2','f3','f4','f5'],
+          ['f1','f1','a','f3','f4','f5','f2'],
+          ['f2','f2','f3','a','f5','f1','f4'],
+          ['f3','f3','f4','f5','a','f2','f1'],
+          ['f4','f4','f5','f1','f2','a','f3'],
+          ['f5','f5','f2','f4','f1','f3','a']] 
 
-set = crearConjunto(matriz) ## se define el conjunto en base a el header de la tabla 
-tieneFormato = verificarFormato(matriz) ## se verifica que sea cuadrada
+set = crearConjunto(matriz)
+tieneFormato = verificarFormato(matriz) 
 
 if(tieneFormato):
-    matriz = ordenarMatriz(matriz) ## se ordena para que cada elemento m[i][0] corresponda a cada m[0][i]
-    esLatino = verificarLatino(matriz, set) ##se verifican filas y columnas, tambien que cada elemnto aparezca una sola vez y que sea una operación cerrada
-    neutro = buscarNeutro(matriz) ## dado que se ordenó la matriz, el neutro debe estar en algun punto de la diagonal
-    todosCumplenNeutro = verificarNeutro(neutro, matriz) ##no es del todo necesario ya que anteriormente se comprobo que todos deben tener neutro
+    matriz = ordenarMatriz(matriz) 
+    esLatino = verificarLatino(matriz, set) 
+    neutro = buscarNeutro(matriz) 
+    todosCumplenNeutro = verificarNeutro(neutro, matriz) 
     esAsociativo = verificarAsociatividad(matriz)
-    ##print(esLatino, todosCumplenNeutro, neutro, esAsociativo)
     if(esLatino):
         print("es Cuadro Latino")
         if(esAsociativo and todosCumplenNeutro):
